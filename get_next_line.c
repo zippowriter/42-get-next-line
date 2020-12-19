@@ -6,7 +6,7 @@
 /*   By: hkono <hkono@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 21:58:41 by hkono             #+#    #+#             */
-/*   Updated: 2020/12/18 22:03:05 by hkono            ###   ########.fr       */
+/*   Updated: 2020/12/19 09:34:47 by hkono            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int		join_line(int fd, char **line)
 {
-	char		*tmp;
-	int			ret;
-	char		*buf;
+	char        *tmp;
+	int         ret;
+	char        *buf;
 
 	if (!(buf = (char *)malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1))))
 		return (-1);
@@ -41,8 +41,8 @@ int		join_line(int fd, char **line)
 
 int		get_next_prep(char **line, char **save)
 {
-	char	*tmp;
-	char	*nlptr;
+	char        *tmp;
+	char        *nlptr;
 
 	if (!(nlptr = ft_strchr(*line, '\n')))
 		return (0);
@@ -57,8 +57,8 @@ int		get_next_prep(char **line, char **save)
 
 int		get_next_line(int fd, char **line)
 {
-	static char		*save;
-	int				ret;
+	static char *save;
+	int         ret;
 
 	if (!line || fd < 0 || BUFFER_SIZE <= 0)
 		return (-1);
