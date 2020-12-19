@@ -6,16 +6,16 @@
 /*   By: hkono <hkono@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 23:26:50 by hkono             #+#    #+#             */
-/*   Updated: 2020/12/18 01:31:41 by hkono            ###   ########.fr       */
+/*   Updated: 2020/12/19 09:38:11 by hkono            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strchr(char *s, int c)
+char    *ft_strchr(char *s, int c)
 {
-	char	*str;
-	char	cc;
+	char    *str;
+	char    cc;
 
 	str = s;
 	cc = (char)c;
@@ -30,11 +30,11 @@ char	*ft_strchr(char *s, int c)
 	return (NULL);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char    *ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*substr;
-	size_t	s_i;
-	size_t	subs_i;
+	char    *substr;
+	size_t  s_i;
+	size_t  subs_i;
 
 	if (s == NULL)
 		return (0);
@@ -56,9 +56,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (substr);
 }
 
-int		ft_strlen(char *s)
+int     ft_strlen(char *s)
 {
-	int		i;
+	int     i;
 
 	i = 0;
 	while (s[i] != '\0')
@@ -68,11 +68,11 @@ int		ft_strlen(char *s)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	int		s1_len;
-	int		s2_len;
-	int		i;
-	int		j;
-	char	*str;
+	int     s1_len;
+	int     s2_len;
+	int     i;
+	int     j;
+	char    *str;
 
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
@@ -95,11 +95,11 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-char	*ft_strdup(char *s1)
+char    *ft_strdup(char *s1)
 {
-	char	*dst;
-	size_t	dstsize;
-	size_t	i;
+	char    *dst;
+	size_t  dstsize;
+	size_t  i;
 
 	dstsize = ft_strlen(s1);
 	if (!(dst = (char *)malloc(sizeof(char) * (dstsize + 1))))
