@@ -6,59 +6,76 @@
 /*   By: hkono <hkono@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 21:58:41 by hkono             #+#    #+#             */
-/*   Updated: 2020/12/19 09:34:47 by hkono            ###   ########.fr       */
+/*   Updated: 2021/04/20 23:57:52 by hkono            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		join_line(int fd, char **line)
+static int	var_init(char **buf, int fd)
 {
-	char        *tmp;
-	int         ret;
-	char        *buf;
+	int		ret;
 
-	if (!(buf = (char *)malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1))))
+	ret = 0;
+	*buf = (char *)malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
+	if (*buf == NULL)
 		return (-1);
-	while ((ret = read(fd, buf, BUFFER_SIZE)) > 0)
+	ret = read(fd, *buf, BUFFER_SIZE);
+	return (ret);
+}
+
+static int	join_line(int fd, char **line)
+{
+	char	*tmp;
+	int		ret;
+	char	*buf;
+
+	ret = var_init(&buf, fd);
+	while (ret > 0)
 	{
 		buf[ret] = '\0';
 		if (*line)
-			if (!(tmp = ft_strjoin(*line, buf)))
-				return (-1);
-		if (!*line)
-			if (!(tmp = ft_strdup(buf)))
-				return (-1);
+			tmp = ft_strjoin(*line, buf);
+		else if (!*line)
+			tmp = ft_strdup(buf);
+		if (tmp == NULL)
+			return (-1);
 		if (*line)
 			free(*line);
 		*line = tmp;
 		if (ft_strchr(buf, '\n'))
 			break ;
+		ret = read(fd, buf, BUFFER_SIZE);
 	}
 	free(buf);
-	return (ret > 0 ? 1 : ret);
+	if (ret > 0)
+		return (1);
+	return (ret);
 }
 
-int		get_next_prep(char **line, char **save)
+static int	get_next_prep(char **line, char **save)
 {
-	char        *tmp;
-	char        *nlptr;
+	char	*tmp;
+	char	*nlptr;
 
-	if (!(nlptr = ft_strchr(*line, '\n')))
+	nlptr = ft_strchr(*line, '\n');
+	if (nlptr == NULL)
 		return (0);
-	if (!(tmp = ft_substr(*line, 0, nlptr - *line)))
+	tmp = ft_substr(*line, 0, nlptr - *line);
+	if (tmp == NULL)
 		return (-1);
-	if (!(*save = ft_strdup(nlptr + 1)))
+	*save = ft_strdup(nlptr + 1);
+	if (*save == NULL)
 		return (-1);
 	free(*line);
 	*line = tmp;
 	return (1);
 }
 
-int		get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
-	static char *save;
-	int         ret;
+	static char	*save;
+	int			ret;
 
 	if (!line || fd < 0 || BUFFER_SIZE <= 0)
 		return (-1);
