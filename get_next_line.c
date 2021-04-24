@@ -6,39 +6,37 @@
 /*   By: hkono <hkono@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 21:58:41 by hkono             #+#    #+#             */
-/*   Updated: 2021/04/20 23:57:52 by hkono            ###   ########.fr       */
+/*   Updated: 2021/04/24 11:19:57 by hkono            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	var_init(char **buf, int fd)
+int	join_line_and_buf(char **line, char **buf, char **tmp)
 {
-	int		ret;
-
-	ret = 0;
-	*buf = (char *)malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
-	if (*buf == NULL)
+	if (*line)
+		*tmp = ft_strjoin(*line, *buf);
+	else if (!*line)
+		*tmp = ft_strdup(*buf);
+	if (*tmp == NULL)
 		return (-1);
-	ret = read(fd, *buf, BUFFER_SIZE);
-	return (ret);
+	return (1);
 }
 
-static int	join_line(int fd, char **line)
+int	join_line(int fd, char **line)
 {
 	char	*tmp;
 	int		ret;
 	char	*buf;
 
-	ret = var_init(&buf, fd);
+	buf = (char *)malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
+	if (buf == NULL)
+		return (-1);
+	ret = read(fd, buf, BUFFER_SIZE);
 	while (ret > 0)
 	{
 		buf[ret] = '\0';
-		if (*line)
-			tmp = ft_strjoin(*line, buf);
-		else if (!*line)
-			tmp = ft_strdup(buf);
-		if (tmp == NULL)
+		if (join_line_and_buf(line, &buf, &tmp) == -1)
 			return (-1);
 		if (*line)
 			free(*line);
@@ -53,7 +51,7 @@ static int	join_line(int fd, char **line)
 	return (ret);
 }
 
-static int	get_next_prep(char **line, char **save)
+int	get_next_prep(char **line, char **save)
 {
 	char	*tmp;
 	char	*nlptr;

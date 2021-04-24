@@ -6,7 +6,7 @@
 /*   By: hkono <hkono@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 22:33:11 by hkono             #+#    #+#             */
-/*   Updated: 2021/04/20 23:11:48 by hkono            ###   ########.fr       */
+/*   Updated: 2021/04/24 10:45:05 by hkono            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 int		get_next_line(int fd, char **line);
 int		ft_strlen(char *s);
 char	*ft_strjoin(char *s1, char *s2);
+int		ft_strlen_chr(char *s, char c);
 char	*ft_strdup(char *s1);
 char	*ft_strchr(char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
